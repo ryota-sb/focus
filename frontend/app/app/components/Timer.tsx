@@ -1,9 +1,14 @@
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
-interface Props {
+interface TimerProps {
   isPlay: boolean;
-  duration?: number;
-  complete?: () => void;
+  duration: number;
+  complete: () => void;
+}
+
+interface TimerRoleProps {
+  isPlay: boolean;
+  complete: () => void;
 }
 
 // フォーマット変換（分:秒）
@@ -17,58 +22,49 @@ const convertTime = (remainingTime: number) => {
   );
 };
 
-// 25分タイマー（作業時間）
-const PomodoroTimer = ({ isPlay, duration, complete }: Props) => {
+// タイマー雛形
+const Timer = ({ isPlay, duration, complete }: TimerProps) => {
   return (
     <>
       <CountdownCircleTimer
         strokeWidth={5}
         isPlaying={isPlay}
-        duration={3}
+        duration={duration}
         colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
         colorsTime={[10, 7, 4, 0]}
         onComplete={complete}
       >
         {({ remainingTime }) => convertTime(remainingTime)}
       </CountdownCircleTimer>
+    </>
+  );
+};
+
+// 25分タイマー（作業時間）
+const WorkTimer = ({ isPlay, complete }: TimerRoleProps) => {
+  return (
+    <>
+      <Timer isPlay={isPlay} duration={5} complete={complete} />
     </>
   );
 };
 
 // 5分タイマー（休憩時間）
-const RestTimer = ({ isPlay, duration, complete }: Props) => {
+const RestTimer = ({ isPlay, complete }: TimerRoleProps) => {
   return (
     <>
-      <CountdownCircleTimer
-        strokeWidth={5}
-        isPlaying={isPlay}
-        duration={2}
-        colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-        colorsTime={[10, 7, 4, 0]}
-        onComplete={complete}
-      >
-        {({ remainingTime }) => convertTime(remainingTime)}
-      </CountdownCircleTimer>
+      <Timer isPlay={isPlay} duration={3} complete={complete} />
     </>
   );
 };
 
 // 15分〜30分タイマー（4周期に1回の休憩時間）
-const LongRestTimer = ({ isPlay, duration, complete }: Props) => {
+const LongRestTimer = ({ isPlay, complete }: TimerRoleProps) => {
   return (
     <>
-      <CountdownCircleTimer
-        strokeWidth={5}
-        isPlaying={isPlay}
-        duration={10}
-        colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-        colorsTime={[10, 7, 4, 0]}
-        onComplete={complete}
-      >
-        {({ remainingTime }) => convertTime(remainingTime)}
-      </CountdownCircleTimer>
+      <Timer isPlay={isPlay} duration={10} complete={complete} />
     </>
   );
 };
 
-export { PomodoroTimer, RestTimer, LongRestTimer };
+export { WorkTimer, RestTimer, LongRestTimer };
