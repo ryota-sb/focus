@@ -5,11 +5,12 @@ import { Suspense, useState, useEffect } from "react";
 import { YoutubePlayer } from "components/MusicPlayer";
 import { WorkTimer, RestTimer, LongRestTimer } from "components/Timer";
 
+// Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { faCircleStop } from "@fortawesome/free-regular-svg-icons";
 
-const About = () => {
+const Timer = () => {
   const [isClient, setIsClient] = useState(false);
 
   // 各タイマーの再生状態
@@ -62,8 +63,8 @@ const About = () => {
     // 長休憩BGM スタート処理
   };
 
-  // Pomodoro完了
-  const pomodoroCompleted = () => {
+  // Work完了
+  const workCompleted = () => {
     incrementCompleteCount();
     setIsWorkMode(false);
     workTimerStop();
@@ -124,7 +125,7 @@ const About = () => {
         {isClient && (
           <>
             {isWorkMode ? (
-              <WorkTimer isPlay={isWorkPlaying} complete={pomodoroCompleted} />
+              <WorkTimer isPlay={isWorkPlaying} complete={workCompleted} />
             ) : isFourthCycle ? (
               <LongRestTimer
                 isPlay={isLongRestPlaying}
@@ -154,4 +155,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Timer;
