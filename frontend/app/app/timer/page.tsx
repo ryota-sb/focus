@@ -68,6 +68,7 @@ const Timer = () => {
     incrementCompleteCount();
     setIsWorkMode(false);
     workTimerStop();
+    createPomodoro();
 
     // CompleteCount 再評価
     const currentCycle = completeCount + 1;
@@ -119,39 +120,50 @@ const Timer = () => {
     console.log(completeCount % 4 === 0 && completeCount !== 0);
   }, [completeCount, isLongRestPlaying]);
 
+  const today = new Date();
+
+  const createPomodoro = async () => {
+    const formData = new FormData();
+    formData.append("pomodoro[date]", today.toISOString());
+    const response = await fetch("http://localhost:3000/api/v1/pomodoros", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
-    <>
-      <Suspense>
-        {isClient && (
-          <>
-            {isWorkMode ? (
-              <WorkTimer isPlay={isWorkPlaying} complete={workCompleted} />
-            ) : isFourthCycle ? (
-              <LongRestTimer
-                isPlay={isLongRestPlaying}
-                complete={LongRestCompleted}
-              />
+    <div>
+      {isClient && (
+        <>
+          {isWorkMode ? (
+            <WorkTimer isPlay={isWorkPlaying} complete={workCompleted} />
+          ) : isFourthCycle ? (
+            <LongRestTimer
+              isPlay={isLongRestPlaying}
+              complete={LongRestCompleted}
+            />
+          ) : (
+            <RestTimer isPlay={isRestPlaying} complete={restCompleted} />
+          )}
+
+          <YoutubePlayer isPlay={isMusicPlaying} />
+
+          <div>
+            {isPlayed ? (
+              <button onClick={() => pauseTimer()}>
+                <FontAwesomeIcon icon={faCircleStop} size="3x" />
+              </button>
             ) : (
-              <RestTimer isPlay={isRestPlaying} complete={restCompleted} />
+              <button onClick={() => startTimer()}>
+                <FontAwesomeIcon icon={faCirclePlay} size="3x" />
+              </button>
             )}
-
-            <YoutubePlayer isPlay={isMusicPlaying} />
-
-            <div>
-              {isPlayed ? (
-                <button onClick={() => pauseTimer()}>
-                  <FontAwesomeIcon icon={faCircleStop} size="3x" />
-                </button>
-              ) : (
-                <button onClick={() => startTimer()}>
-                  <FontAwesomeIcon icon={faCirclePlay} size="3x" />
-                </button>
-              )}
-            </div>
-          </>
-        )}
-      </Suspense>
-    </>
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 
