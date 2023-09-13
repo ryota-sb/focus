@@ -1,8 +1,12 @@
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import {
+  CountdownCircleTimer,
+  type ColorFormat,
+} from "react-countdown-circle-timer";
 
 interface TimerProps {
   isPlay: boolean;
   duration: number;
+  colors: ColorFormat;
   complete: () => void;
 }
 
@@ -23,15 +27,14 @@ const convertTime = (remainingTime: number) => {
 };
 
 // タイマー雛形
-const Timer = ({ isPlay, duration, complete }: TimerProps) => {
+const Timer = ({ isPlay, duration, complete, colors }: TimerProps) => {
   return (
     <>
       <CountdownCircleTimer
-        strokeWidth={5}
+        strokeWidth={3}
         isPlaying={isPlay}
         duration={duration}
-        colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-        colorsTime={[10, 7, 4, 0]}
+        colors={colors}
         onComplete={complete}
       >
         {({ remainingTime }) => convertTime(remainingTime)}
@@ -44,7 +47,12 @@ const Timer = ({ isPlay, duration, complete }: TimerProps) => {
 const WorkTimer = ({ isPlay, complete }: TimerRoleProps) => {
   return (
     <>
-      <Timer isPlay={isPlay} duration={5} complete={complete} />
+      <Timer
+        isPlay={isPlay}
+        duration={5}
+        complete={complete}
+        colors={"#6658A6"}
+      />
     </>
   );
 };
@@ -53,7 +61,12 @@ const WorkTimer = ({ isPlay, complete }: TimerRoleProps) => {
 const RestTimer = ({ isPlay, complete }: TimerRoleProps) => {
   return (
     <>
-      <Timer isPlay={isPlay} duration={3} complete={complete} />
+      <Timer
+        isPlay={isPlay}
+        duration={3}
+        complete={complete}
+        colors={"#1A4472"}
+      />
     </>
   );
 };
@@ -62,7 +75,12 @@ const RestTimer = ({ isPlay, complete }: TimerRoleProps) => {
 const LongRestTimer = ({ isPlay, complete }: TimerRoleProps) => {
   return (
     <>
-      <Timer isPlay={isPlay} duration={10} complete={complete} />
+      <Timer
+        isPlay={isPlay}
+        duration={10}
+        complete={complete}
+        colors={"#007C8A"}
+      />
     </>
   );
 };
