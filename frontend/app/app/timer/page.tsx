@@ -1,7 +1,8 @@
 "use client"; // Client Componentを書く場合、この宣言が必要（React18から）
 
-import { Suspense, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
+import HeatMapComp from "@/components/HeatMapComp";
 import { YoutubePlayer } from "components/MusicPlayer";
 import { WorkTimer, RestTimer, LongRestTimer } from "components/Timer";
 
@@ -160,6 +161,9 @@ const Timer = () => {
                 <FontAwesomeIcon icon={faCirclePlay} size="3x" />
               </button>
             )}
+          </div>
+          <div>
+            <HeatMapComp />
           </div>
         </>
       )}

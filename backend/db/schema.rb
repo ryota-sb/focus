@@ -10,18 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_29_101642) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_19_134520) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "pomodoro_aggregations", force: :cascade do |t|
-    t.date "aggregation_date"
-    t.integer "pomodoro_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "pomodoro_id"
-    t.index ["pomodoro_id"], name: "index_pomodoro_aggregations_on_pomodoro_id"
-  end
 
   create_table "pomodoros", force: :cascade do |t|
     t.date "date"
@@ -29,5 +20,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_101642) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "pomodoro_aggregations", "pomodoros"
 end
